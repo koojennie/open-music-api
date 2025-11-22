@@ -89,6 +89,15 @@ class SongsService {
     });
     return res.rows;
   }
+
+  async verifySongId(id) {
+    const result = await this._pool.query({
+      text: 'SELECT id FROM songs WHERE id = $1',
+      values: [id],
+    });
+
+    if (!result.rows.length) throw new NotFoundError('Lagu tidak ditemukan');
+  }
 }
 
 module.exports = SongsService;
